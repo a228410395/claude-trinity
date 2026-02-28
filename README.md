@@ -2,8 +2,6 @@
 
 # claude-trinity
 
-<img src="assets/banner.png" alt="claude-trinity banner" width="600">
-
 **A three-layer memory system for Claude Code**
 **Claude Code 三层记忆系统**
 
@@ -11,6 +9,17 @@
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-compatible-blueviolet.svg)](https://docs.anthropic.com/en/docs/claude-code)
 
 **[English](#english) | [中文](#中文)**
+
+```
+          L1 HOT              L2 WARM             L3 STORE
+     ┌─────────────┐    ┌──────────────┐    ┌───────────────┐
+     │  rules/*.md  │    │  MEMORY.md   │    │  claude-mem   │
+     │  Path-aware  │───▶│  crossmem.md │───▶│  SQLite + RAG │
+     │  auto-load   │    │  facts/*.json│    │  semantic     │
+     └─────────────┘    └──────────────┘    └───────────────┘
+       Automatic          Automatic           On-demand
+      (file path)       (every session)       (by query)
+```
 
 </div>
 
@@ -21,10 +30,6 @@
 ## English
 
 **A three-layer memory system for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) that makes your AI assistant remember, learn, and adapt.**
-
-<div align="center">
-<img src="assets/architecture.png" alt="Three-layer architecture" width="500">
-</div>
 
 ### Why claude-trinity?
 
@@ -127,10 +132,6 @@ The optional `claude-mem` plugin provides:
 
 ### Methodology
 
-<div align="center">
-<img src="assets/methodology.png" alt="Dialectical methodology" width="400">
-</div>
-
 claude-trinity includes a unique [dialectical methodology](methodology/methodology.md) that provides mental models for:
 
 - **Investigation-first debugging** — No guessing; read code, check logs, understand context before proposing fixes
@@ -226,10 +227,6 @@ Please open an issue first to discuss significant changes.
 
 **为 [Claude Code](https://docs.anthropic.com/en/docs/claude-code) 打造的三层记忆系统，让你的 AI 助手能够记住、学习和适应。**
 
-<div align="center">
-<img src="assets/architecture.png" alt="三层架构" width="500">
-</div>
-
 ### 为什么需要 claude-trinity？
 
 Claude Code 很强大，但每次会话之间它会忘记一切。你不得不反复解释同样的指令、重新说明项目结构，看着它犯同样的错误。
@@ -323,10 +320,6 @@ bash install.sh
 - **按需检索** 按语义搜索历史会话，而非仅靠关键词
 
 ### 方法论
-
-<div align="center">
-<img src="assets/methodology.png" alt="辩证方法论" width="400">
-</div>
 
 claude-trinity 包含独特的[辩证方法论](methodology/methodology.md)，提供以下思维模型：
 
