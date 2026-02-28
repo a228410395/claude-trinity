@@ -197,6 +197,7 @@ The `superseded_by` field lets you track how facts change over time without losi
 - [Comparison Table](docs/comparison.md) — Detailed feature comparison
 - [Customization Guide](docs/customization.md) — Write your own rules and hooks
 - [FAQ](docs/faq.md) — Common questions and answers
+- [Release Checklist](docs/release-checklist.md) — Pre-release validation gates
 
 ### Contributing
 
@@ -356,6 +357,7 @@ claude-trinity 包含独特的[辩证方法论](methodology/methodology.md)，�
 - [对比表](docs/comparison.zh-CN.md) — 详细功能对比
 - [自定义指南](docs/customization.zh-CN.md) — 编写自己的规则和 hooks
 - [常见问题](docs/faq.zh-CN.md) — FAQ
+- [发布清单](docs/release-checklist.md) — 发布前验证门槛
 
 ### 贡献
 

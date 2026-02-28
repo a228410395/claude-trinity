@@ -34,7 +34,18 @@ Yes. The script just copies files. You can manually:
 1. Copy `templates/rules/*.md` to `~/.claude/rules/`
 2. Copy `templates/memory/*` to `~/.claude/memory/`
 3. Copy `methodology/methodology.md` to `~/.claude/memory/methodology/`
-4. Optionally merge `templates/settings-hooks.json` into `~/.claude/settings.json`
+4. Optionally merge `templates/settings-hooks.unix.json` (or `.windows.json`) into `~/.claude/settings.json`
+
+### Is `curl | bash` safe for Bun installation?
+
+`curl | bash` is convenient but has supply-chain risk. In `install.sh`, Bun installation now has two prompts:
+
+1. Confirm Bun installation.
+2. Confirm remote script execution from `https://bun.sh/install`.
+
+If you don't allow remote scripts, decline and install Bun manually from the official docs:
+
+- <https://bun.sh/install>
 
 ### Will it overwrite my existing MEMORY.md?
 

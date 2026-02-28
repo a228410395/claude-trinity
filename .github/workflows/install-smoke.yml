@@ -1,0 +1,93 @@
+name: Install Smoke Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  unix-install-smoke:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+    runs-on: ${{ matrix.os }}
+    env:
+      HOME: ${{ runner.temp }}/claude-trinity-home
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run installer (first pass)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME"
+          bash ./install.sh --yes --skip-claude-mem
+
+      - name: Run installer (idempotency pass)
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash ./install.sh --yes --skip-claude-mem
+
+      - name: Verify installed files
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f "$HOME/.claude/memory/MEMORY.md"
+          test -f "$HOME/.claude/memory/crossmem.md"
+          test -f "$HOME/.claude/memory/facts/example-project.json"
+          test -f "$HOME/.claude/memory/methodology/methodology.md"
+          test -f "$HOME/.claude/rules/example-docker.md"
+          test -f "$HOME/.claude/settings.json"
+          grep -F '2>/dev/null || true' "$HOME/.claude/settings.json"
+
+  windows-install-smoke:
+    runs-on: windows-latest
+    env:
+      USERPROFILE: ${{ runner.temp }}\claude-trinity-home
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run installer (first pass)
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Path $env:USERPROFILE -Force | Out-Null
+          .\install.ps1 -Yes -SkipClaudeMem
+
+      - name: Run installer (idempotency pass)
+        shell: pwsh
+        run: |
+          .\install.ps1 -Yes -SkipClaudeMem
+
+      - name: Verify installed files
+        shell: pwsh
+        run: |
+          $settings = Join-Path $env:USERPROFILE ".claude\settings.json"
+          $requiredFiles = @(
+            (Join-Path $env:USERPROFILE ".claude\memory\MEMORY.md"),
+            (Join-Path $env:USERPROFILE ".claude\memory\crossmem.md"),
+            (Join-Path $env:USERPROFILE ".claude\memory\facts\example-project.json"),
+            (Join-Path $env:USERPROFILE ".claude\memory\methodology\methodology.md"),
+            (Join-Path $env:USERPROFILE ".claude\rules\example-docker.md"),
+            $settings
+          )
+          foreach ($file in $requiredFiles) {
+            if (-not (Test-Path $file)) {
+              throw "Missing expected file: $file"
+            }
+          }
+          $settingsContent = Get-Content -Raw $settings
+          if ($settingsContent -notmatch "powershell -NoProfile -Command") {
+            throw "Expected Windows hook command not found in settings.json"
+          }
+
+      - name: Verify SessionStart hook simulation
+        shell: pwsh
+        run: |
+          .\scripts\verify-hooks.ps1
