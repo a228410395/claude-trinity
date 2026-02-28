@@ -1,0 +1,63 @@
+{
+  "facts": [
+    {
+      "id": "fact-001",
+      "category": "infrastructure",
+      "key": "database_type",
+      "value": "PostgreSQL 15 with pgvector extension",
+      "confidence": "verified",
+      "source": "docker-compose.yml inspection",
+      "created": "2025-01-15",
+      "superseded_by": null
+    },
+    {
+      "id": "fact-002",
+      "category": "infrastructure",
+      "key": "database_type",
+      "value": "PostgreSQL 14",
+      "confidence": "verified",
+      "source": "docker-compose.yml inspection",
+      "created": "2024-11-01",
+      "superseded_by": "fact-001",
+      "_note": "This fact was superseded when the project upgraded to PG15 + pgvector"
+    },
+    {
+      "id": "fact-003",
+      "category": "api",
+      "key": "auth_method",
+      "value": "JWT with refresh token rotation",
+      "confidence": "verified",
+      "source": "code review of auth middleware",
+      "created": "2025-01-20",
+      "superseded_by": null
+    },
+    {
+      "id": "fact-004",
+      "category": "deployment",
+      "key": "hosting",
+      "value": "Docker Compose on single VPS",
+      "confidence": "verified",
+      "source": "deployment docs",
+      "created": "2025-02-01",
+      "superseded_by": null
+    }
+  ],
+  "_schema": {
+    "description": "Structured facts about a project. Claude reads these to quickly understand project context.",
+    "fields": {
+      "id": "Unique identifier, format: fact-NNN",
+      "category": "One of: infrastructure, api, deployment, frontend, backend, testing, tooling",
+      "key": "What aspect this fact describes",
+      "value": "The actual fact",
+      "confidence": "One of: verified (tested/confirmed), inferred (read from code), reported (user said so)",
+      "source": "How this fact was discovered",
+      "created": "Date in YYYY-MM-DD format",
+      "superseded_by": "ID of the fact that replaces this one, or null if current"
+    },
+    "rules": [
+      "Never delete old facts — mark them with superseded_by pointing to the replacement",
+      "Always include source so facts can be re-verified",
+      "Use 'inferred' confidence for facts read from code that haven't been runtime-tested"
+    ]
+  }
+}

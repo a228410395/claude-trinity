@@ -1,0 +1,38 @@
+{
+  "_description": "Claude Code hooks configuration template. Merge into your ~/.claude/settings.json",
+  "_docs": "https://docs.anthropic.com/en/docs/claude-code/hooks",
+
+  "hooks": {
+    "SessionStart": [
+      {
+        "description": "Load cross-project memory at session start",
+        "command": "cat \"$HOME/.claude/memory/crossmem.md\" 2>/dev/null || true",
+        "timeout": 5000
+      }
+    ],
+    "PostToolUse": [
+      {
+        "description": "Optional: Send notification on long-running task completion",
+        "matcher": "Task",
+        "command": "node <PATH_TO_NOTIFY_SCRIPT> --event=task_complete --token=<YOUR_TELEGRAM_BOT_TOKEN> --chat=<YOUR_TELEGRAM_CHAT_ID>",
+        "timeout": 10000,
+        "enabled": false
+      }
+    ],
+    "Notification": [
+      {
+        "description": "Optional: Forward Claude notifications to Telegram",
+        "command": "curl -s -X POST \"https://api.telegram.org/bot<YOUR_TELEGRAM_BOT_TOKEN>/sendMessage\" -d chat_id=<YOUR_TELEGRAM_CHAT_ID> -d text=\"Claude: $CLAUDE_NOTIFICATION_MESSAGE\"",
+        "timeout": 10000,
+        "enabled": false
+      }
+    ]
+  },
+
+  "_placeholders": {
+    "<PATH_TO_NOTIFY_SCRIPT>": "Path to your notification script (e.g., ~/scripts/claude-hook-notify.js)",
+    "<YOUR_TELEGRAM_BOT_TOKEN>": "Telegram bot token from @BotFather",
+    "<YOUR_TELEGRAM_CHAT_ID>": "Your Telegram chat ID (get from @userinfobot)",
+    "<YOUR_API_KEY>": "API key for any external services you integrate"
+  }
+}

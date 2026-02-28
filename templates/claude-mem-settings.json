@@ -1,0 +1,41 @@
+{
+  "_description": "Configuration template for claude-mem (L3 Store Layer)",
+  "_docs": "https://github.com/thedotmack/claude-mem",
+
+  "storage": {
+    "sqlite_path": "~/.claude/claude-mem/memory.db",
+    "chroma_path": "~/.claude/claude-mem/chroma",
+    "backup_dir": "~/.claude/claude-mem/backups"
+  },
+
+  "worker": {
+    "port": 37777,
+    "host": "127.0.0.1",
+    "auto_start": true
+  },
+
+  "embedding": {
+    "model": "all-MiniLM-L6-v2",
+    "dimensions": 384,
+    "_note": "Local model, no API key needed. Runs via @xenova/transformers"
+  },
+
+  "capture": {
+    "auto_observe": true,
+    "min_importance": 0.3,
+    "categories": [
+      "debug_insight",
+      "architecture_decision",
+      "tool_preference",
+      "error_pattern",
+      "performance_finding",
+      "workflow_optimization"
+    ]
+  },
+
+  "retrieval": {
+    "max_results": 10,
+    "similarity_threshold": 0.6,
+    "rerank": true
+  }
+}
