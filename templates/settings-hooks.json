@@ -5,7 +5,7 @@
   "hooks": {
     "SessionStart": [
       {
-        "description": "Load cross-project memory at session start",
+        "description": "Load cross-project memory at session start (Claude Code uses bash on all platforms)",
         "command": "cat \"$HOME/.claude/memory/crossmem.md\" 2>/dev/null || true",
         "timeout": 5000
       }

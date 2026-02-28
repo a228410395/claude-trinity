@@ -181,13 +181,21 @@ else
     if ! check_command bun; then
       info "Bun not found. Attempting to install..."
       if confirm "Install Bun (JavaScript runtime)? Needed for claude-mem"; then
-        curl -fsSL https://bun.sh/install | bash
-        export PATH="$HOME/.bun/bin:$PATH"
-        if check_command bun; then
-          success "Bun installed successfully"
+        info "Installing Bun from https://bun.sh/install ..."
+        info "Review the script at https://bun.sh/install before proceeding."
+        if confirm "Confirm: download and execute bun.sh/install?"; then
+          curl -fsSL https://bun.sh/install | bash
+          export PATH="$HOME/.bun/bin:$PATH"
+          if check_command bun; then
+            success "Bun installed successfully"
+          else
+            warn "Bun installation may require restarting your shell"
+            warn "Skipping claude-mem for now. Run install.sh again after restarting."
+            SKIP_CLAUDE_MEM=true
+          fi
         else
-          warn "Bun installation may require restarting your shell"
-          warn "Skipping claude-mem for now. Run install.sh again after restarting."
+          info "You can install Bun manually: https://bun.sh/install"
+          warn "Skipping Bun and claude-mem installation"
           SKIP_CLAUDE_MEM=true
         fi
       else
@@ -200,10 +208,10 @@ else
       # Copy claude-mem config
       safe_copy "$SCRIPT_DIR/templates/claude-mem-settings.json" "$CLAUDE_DIR/claude-mem-settings.json"
 
-      info "To complete claude-mem setup, run:"
-      echo "  claude mcp add claude-mem -- npx -y @anthropic-ai/claude-code-mcp-server"
+      info "To complete claude-mem setup, see:"
+      echo "  https://github.com/thedotmack/claude-mem#installation"
       echo ""
-      info "Or install manually from: https://github.com/thedotmack/claude-mem"
+      info "Follow the official README for the correct MCP registration command."
       INSTALLED+=("claude-mem-config")
     fi
   else
@@ -267,7 +275,7 @@ echo "  1. Edit ~/.claude/memory/MEMORY.md with your preferences"
 echo "  2. Add project-specific rules to ~/.claude/rules/"
 echo "  3. Restart Claude Code to activate the memory system"
 echo ""
-echo "  Read the docs: https://github.com/anthropics/claude-trinity"
+echo "  Read the docs: https://github.com/a228410395/claude-trinity"
 echo ""
 echo -e "${GREEN}Done!${NC} Three-layer memory system is ready."
 echo ""

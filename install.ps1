@@ -169,10 +169,10 @@ if ($SkipClaudeMem) {
     if (Confirm-Action "Install claude-mem plugin?") {
         Copy-SafeFile (Join-Path $ScriptDir "templates\claude-mem-settings.json") (Join-Path $ClaudeDir "claude-mem-settings.json")
 
-        Write-Info "To complete claude-mem setup, run:"
-        Write-Host '  claude mcp add claude-mem -- npx -y @anthropic-ai/claude-code-mcp-server'
+        Write-Info "To complete claude-mem setup, see:"
+        Write-Host '  https://github.com/thedotmack/claude-mem#installation'
         Write-Host ""
-        Write-Info "Or install manually from: https://github.com/thedotmack/claude-mem"
+        Write-Info "Follow the official README for the correct MCP registration command."
     } else {
         Write-Info "Skipping claude-mem"
         $Skipped += "claude-mem"
@@ -230,7 +230,7 @@ Write-Host "  1. Edit ~/.claude/memory/MEMORY.md with your preferences"
 Write-Host "  2. Add project-specific rules to ~/.claude/rules/"
 Write-Host "  3. Restart Claude Code to activate the memory system"
 Write-Host ""
-Write-Host "  Read the docs: https://github.com/anthropics/claude-trinity"
+Write-Host "  Read the docs: https://github.com/a228410395/claude-trinity"
 Write-Host ""
 Write-Host "Done! Three-layer memory system is ready." -ForegroundColor Green
 Write-Host ""
