@@ -15,8 +15,6 @@ jobs:
           - ubuntu-latest
           - macos-latest
     runs-on: ${{ matrix.os }}
-    env:
-      HOME: ${{ runner.temp }}/claude-trinity-home
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,31 +23,32 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p "$HOME"
-          bash ./install.sh --yes --skip-claude-mem
+          CT_HOME="$RUNNER_TEMP/claude-trinity-home"
+          mkdir -p "$CT_HOME"
+          HOME="$CT_HOME" bash ./install.sh --yes --skip-claude-mem
 
       - name: Run installer (idempotency pass)
         shell: bash
         run: |
           set -euo pipefail
-          bash ./install.sh --yes --skip-claude-mem
+          CT_HOME="$RUNNER_TEMP/claude-trinity-home"
+          HOME="$CT_HOME" bash ./install.sh --yes --skip-claude-mem
 
       - name: Verify installed files
         shell: bash
         run: |
           set -euo pipefail
-          test -f "$HOME/.claude/memory/MEMORY.md"
-          test -f "$HOME/.claude/memory/crossmem.md"
-          test -f "$HOME/.claude/memory/facts/example-project.json"
-          test -f "$HOME/.claude/memory/methodology/methodology.md"
-          test -f "$HOME/.claude/rules/example-docker.md"
-          test -f "$HOME/.claude/settings.json"
-          grep -F '2>/dev/null || true' "$HOME/.claude/settings.json"
+          CT_HOME="$RUNNER_TEMP/claude-trinity-home"
+          test -f "$CT_HOME/.claude/memory/MEMORY.md"
+          test -f "$CT_HOME/.claude/memory/crossmem.md"
+          test -f "$CT_HOME/.claude/memory/facts/example-project.json"
+          test -f "$CT_HOME/.claude/memory/methodology/methodology.md"
+          test -f "$CT_HOME/.claude/rules/example-docker.md"
+          test -f "$CT_HOME/.claude/settings.json"
+          grep -F '2>/dev/null || true' "$CT_HOME/.claude/settings.json"
 
   windows-install-smoke:
     runs-on: windows-latest
-    env:
-      USERPROFILE: ${{ runner.temp }}\claude-trinity-home
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -57,24 +56,29 @@ jobs:
       - name: Run installer (first pass)
         shell: pwsh
         run: |
-          New-Item -ItemType Directory -Path $env:USERPROFILE -Force | Out-Null
+          $ctHome = Join-Path $env:RUNNER_TEMP "claude-trinity-home"
+          New-Item -ItemType Directory -Path $ctHome -Force | Out-Null
+          $env:USERPROFILE = $ctHome
           .\install.ps1 -Yes -SkipClaudeMem
 
       - name: Run installer (idempotency pass)
         shell: pwsh
         run: |
+          $ctHome = Join-Path $env:RUNNER_TEMP "claude-trinity-home"
+          $env:USERPROFILE = $ctHome
           .\install.ps1 -Yes -SkipClaudeMem
 
       - name: Verify installed files
         shell: pwsh
         run: |
-          $settings = Join-Path $env:USERPROFILE ".claude\settings.json"
+          $ctHome = Join-Path $env:RUNNER_TEMP "claude-trinity-home"
+          $settings = Join-Path $ctHome ".claude\settings.json"
           $requiredFiles = @(
-            (Join-Path $env:USERPROFILE ".claude\memory\MEMORY.md"),
-            (Join-Path $env:USERPROFILE ".claude\memory\crossmem.md"),
-            (Join-Path $env:USERPROFILE ".claude\memory\facts\example-project.json"),
-            (Join-Path $env:USERPROFILE ".claude\memory\methodology\methodology.md"),
-            (Join-Path $env:USERPROFILE ".claude\rules\example-docker.md"),
+            (Join-Path $ctHome ".claude\memory\MEMORY.md"),
+            (Join-Path $ctHome ".claude\memory\crossmem.md"),
+            (Join-Path $ctHome ".claude\memory\facts\example-project.json"),
+            (Join-Path $ctHome ".claude\memory\methodology\methodology.md"),
+            (Join-Path $ctHome ".claude\rules\example-docker.md"),
             $settings
           )
           foreach ($file in $requiredFiles) {
