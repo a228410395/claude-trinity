@@ -352,10 +352,10 @@ claude-trinity 包含独特的[辩证方法论](methodology/methodology.md)，�
 
 ### 文档
 
-- [架构深度解析](docs/architecture.md) — 三层如何协作
-- [对比表](docs/comparison.md) — 详细功能对比
-- [自定义指南](docs/customization.md) — 编写自己的规则和 hooks
-- [常见问题](docs/faq.md) — FAQ
+- [架构深度解析](docs/architecture.zh-CN.md) — 三层如何协作
+- [对比表](docs/comparison.zh-CN.md) — 详细功能对比
+- [自定义指南](docs/customization.zh-CN.md) — 编写自己的规则和 hooks
+- [常见问题](docs/faq.zh-CN.md) — FAQ
 
 ### 贡献
 
