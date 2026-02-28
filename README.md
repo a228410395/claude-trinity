@@ -1,6 +1,18 @@
+<div align="center">
+
 # claude-trinity
 
+<img src="assets/banner.png" alt="claude-trinity banner" width="600">
+
+**A three-layer memory system for Claude Code**
+**Claude Code 三层记忆系统**
+
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-compatible-blueviolet.svg)](https://docs.anthropic.com/en/docs/claude-code)
+
 **[English](#english) | [中文](#中文)**
+
+</div>
 
 ---
 
@@ -10,24 +22,9 @@
 
 **A three-layer memory system for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) that makes your AI assistant remember, learn, and adapt.**
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                   claude-trinity                        │
-│                                                         │
-│  ┌─────────────┐  ┌──────────────┐  ┌───────────────┐  │
-│  │  L1 HOT     │  │  L2 WARM     │  │  L3 STORE     │  │
-│  │  rules/*.md  │  │  MEMORY.md   │  │  claude-mem   │  │
-│  │             │  │  crossmem.md │  │  SQLite+RAG   │  │
-│  │  Path-aware │  │  facts/*.json│  │               │  │
-│  │  auto-load  │  │  SessionStart│  │  Semantic     │  │
-│  │             │  │  auto-load   │  │  search       │  │
-│  └─────────────┘  └──────────────┘  └───────────────┘  │
-│                                                         │
-│  Trigger:         Trigger:          Trigger:            │
-│  Automatic        Automatic         On-demand           │
-│  (by file path)   (every session)   (by query)          │
-└─────────────────────────────────────────────────────────┘
-```
+<div align="center">
+<img src="assets/architecture.png" alt="Three-layer architecture" width="500">
+</div>
 
 ### Why claude-trinity?
 
@@ -130,6 +127,10 @@ The optional `claude-mem` plugin provides:
 
 ### Methodology
 
+<div align="center">
+<img src="assets/methodology.png" alt="Dialectical methodology" width="400">
+</div>
+
 claude-trinity includes a unique [dialectical methodology](methodology/methodology.md) that provides mental models for:
 
 - **Investigation-first debugging** — No guessing; read code, check logs, understand context before proposing fixes
@@ -225,23 +226,9 @@ Please open an issue first to discuss significant changes.
 
 **为 [Claude Code](https://docs.anthropic.com/en/docs/claude-code) 打造的三层记忆系统，让你的 AI 助手能够记住、学习和适应。**
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                   claude-trinity                        │
-│                                                         │
-│  ┌─────────────┐  ┌──────────────┐  ┌───────────────┐  │
-│  │  L1 热层     │  │  L2 温层      │  │  L3 库层      │  │
-│  │  rules/*.md  │  │  MEMORY.md   │  │  claude-mem   │  │
-│  │             │  │  crossmem.md │  │  SQLite+RAG   │  │
-│  │  路径感知    │  │  facts/*.json│  │               │  │
-│  │  自动加载    │  │  会话启动     │  │  语义搜索     │  │
-│  │             │  │  自动加载     │  │  按需召回     │  │
-│  └─────────────┘  └──────────────┘  └───────────────┘  │
-│                                                         │
-│  触发方式：       触发方式：         触发方式：          │
-│  自动（按路径）   自动（每次会话）    按需（语义查询）    │
-└─────────────────────────────────────────────────────────┘
-```
+<div align="center">
+<img src="assets/architecture.png" alt="三层架构" width="500">
+</div>
 
 ### 为什么需要 claude-trinity？
 
@@ -336,6 +323,10 @@ bash install.sh
 - **按需检索** 按语义搜索历史会话，而非仅靠关键词
 
 ### 方法论
+
+<div align="center">
+<img src="assets/methodology.png" alt="辩证方法论" width="400">
+</div>
 
 claude-trinity 包含独特的[辩证方法论](methodology/methodology.md)，提供以下思维模型：
 
