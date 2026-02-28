@@ -1,11 +1,11 @@
 {
-  "_description": "Claude Code hooks configuration template. Merge into your ~/.claude/settings.json",
+  "_description": "Claude Code hooks configuration template (Unix: macOS / Linux / WSL). Merge into ~/.claude/settings.json",
   "_docs": "https://docs.anthropic.com/en/docs/claude-code/hooks",
 
   "hooks": {
     "SessionStart": [
       {
-        "description": "Load cross-project memory at session start (Claude Code uses bash on all platforms)",
+        "description": "Load cross-project memory at session start",
         "command": "cat \"$HOME/.claude/memory/crossmem.md\" 2>/dev/null || true",
         "timeout": 5000
       }
@@ -32,7 +32,6 @@
   "_placeholders": {
     "<PATH_TO_NOTIFY_SCRIPT>": "Path to your notification script (e.g., ~/scripts/claude-hook-notify.js)",
     "<YOUR_TELEGRAM_BOT_TOKEN>": "Telegram bot token from @BotFather",
-    "<YOUR_TELEGRAM_CHAT_ID>": "Your Telegram chat ID (get from @userinfobot)",
-    "<YOUR_API_KEY>": "API key for any external services you integrate"
+    "<YOUR_TELEGRAM_CHAT_ID>": "Your Telegram chat ID (get from @userinfobot)"
   }
 }

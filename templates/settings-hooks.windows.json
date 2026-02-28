@@ -1,0 +1,37 @@
+{
+  "_description": "Claude Code hooks configuration template (Windows PowerShell). Merge into ~/.claude/settings.json",
+  "_docs": "https://docs.anthropic.com/en/docs/claude-code/hooks",
+
+  "hooks": {
+    "SessionStart": [
+      {
+        "description": "Load cross-project memory at session start",
+        "command": "powershell -NoProfile -Command \"$f=Join-Path $env:USERPROFILE '.claude\\memory\\crossmem.md'; if(Test-Path $f){Get-Content $f -Raw}\"",
+        "timeout": 5000
+      }
+    ],
+    "PostToolUse": [
+      {
+        "description": "Optional: Send notification on long-running task completion",
+        "matcher": "Task",
+        "command": "node <PATH_TO_NOTIFY_SCRIPT> --event=task_complete --token=<YOUR_TELEGRAM_BOT_TOKEN> --chat=<YOUR_TELEGRAM_CHAT_ID>",
+        "timeout": 10000,
+        "enabled": false
+      }
+    ],
+    "Notification": [
+      {
+        "description": "Optional: Forward Claude notifications to Telegram",
+        "command": "powershell -NoProfile -Command \"Invoke-RestMethod -Uri 'https://api.telegram.org/bot<YOUR_TELEGRAM_BOT_TOKEN>/sendMessage' -Method Post -Body @{chat_id='<YOUR_TELEGRAM_CHAT_ID>';text=\\\"Claude: $env:CLAUDE_NOTIFICATION_MESSAGE\\\"}\"",
+        "timeout": 10000,
+        "enabled": false
+      }
+    ]
+  },
+
+  "_placeholders": {
+    "<PATH_TO_NOTIFY_SCRIPT>": "Path to your notification script (e.g., C:\\scripts\\claude-hook-notify.js)",
+    "<YOUR_TELEGRAM_BOT_TOKEN>": "Telegram bot token from @BotFather",
+    "<YOUR_TELEGRAM_CHAT_ID>": "Your Telegram chat ID (get from @userinfobot)"
+  }
+}

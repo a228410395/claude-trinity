@@ -101,8 +101,9 @@ Hooks are shell commands that Claude Code executes in response to events. claude
 
 ### Hook Configuration
 
-Hooks are configured in `~/.claude/settings.json`:
+Hooks are configured in `~/.claude/settings.json`. The command syntax depends on your platform.
 
+**macOS / Linux / WSL:**
 ```json
 {
   "hooks": {
@@ -116,6 +117,23 @@ Hooks are configured in `~/.claude/settings.json`:
   }
 }
 ```
+
+**Windows (PowerShell):**
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "description": "Load cross-project memory",
+        "command": "powershell -NoProfile -Command \"$f=Join-Path $env:USERPROFILE '.claude\\memory\\crossmem.md'; if(Test-Path $f){Get-Content $f -Raw}\"",
+        "timeout": 5000
+      }
+    ]
+  }
+}
+```
+
+> **Note**: The install scripts automatically choose the correct template for your platform.
 
 ### Available Hook Events
 

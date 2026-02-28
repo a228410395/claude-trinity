@@ -235,10 +235,10 @@ else
     warn "Existing settings.json found at $SETTINGS_FILE"
     info "Hook template saved to: $CLAUDE_DIR/settings-hooks-template.json"
     info "Please merge manually to avoid overwriting your existing configuration."
-    safe_copy "$SCRIPT_DIR/templates/settings-hooks.json" "$CLAUDE_DIR/settings-hooks-template.json"
+    safe_copy "$SCRIPT_DIR/templates/settings-hooks.unix.json" "$CLAUDE_DIR/settings-hooks-template.json"
   else
     if confirm "Create hooks configuration? (SessionStart will auto-load crossmem.md)"; then
-      safe_copy "$SCRIPT_DIR/templates/settings-hooks.json" "$SETTINGS_FILE"
+      safe_copy "$SCRIPT_DIR/templates/settings-hooks.unix.json" "$SETTINGS_FILE"
     else
       info "Skipping hooks configuration"
       SKIPPED+=("hooks")

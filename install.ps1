@@ -192,10 +192,10 @@ if ($SkipHooks) {
     if (Test-Path $settingsFile) {
         Write-Warn "Existing settings.json found at $settingsFile"
         Write-Info "Hook template saved separately. Please merge manually."
-        Copy-SafeFile (Join-Path $ScriptDir "templates\settings-hooks.json") (Join-Path $ClaudeDir "settings-hooks-template.json")
+        Copy-SafeFile (Join-Path $ScriptDir "templates\settings-hooks.windows.json") (Join-Path $ClaudeDir "settings-hooks-template.json")
     } else {
         if (Confirm-Action "Create hooks configuration?") {
-            Copy-SafeFile (Join-Path $ScriptDir "templates\settings-hooks.json") $settingsFile
+            Copy-SafeFile (Join-Path $ScriptDir "templates\settings-hooks.windows.json") $settingsFile
         } else {
             $Skipped += "hooks"
         }
